@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About TomatoHealth Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+        }
+        header li {
+            padding: 0 20px;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        header .highlight, header .current a {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        header a:hover {
+            color: #ffd700;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 80px auto 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1, h2 {
+            color: #e74c3c;
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        .team-member {
+            margin-bottom: 1rem;
+        }
+        .team-lead {
+            font-weight: bold;
+        }
+        .team-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .team-list li {
+            margin-bottom: 0.5rem;
+        }
+        .github-link {
+            background-color: #333;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+        .github-link:hover {
+            background-color: #555;
+        }
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            header ul {
+                margin-top: 10px;
+            }
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+            .section {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div id="branding">
+                <h1><span class="highlight">TomatoHealth Detector</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'recognition' %}">Recognition</a></li>
+                    <li class="current"><a href="{% url 'about' %}">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <section class="section">
+            <h2>Our Mission</h2>
+            <p>At TomatoHealth Detector, we're committed to revolutionizing tomato farming through cutting-edge AI technology. Our mission is to help farmers identify tomato diseases efficiently, leading to healthier crops and increased yields.</p>
+        </section>
+
+        <section class="section">
+            <h2>The Technology</h2>
+            <p>Our TomatoHealth Detector employs advanced machine learning algorithms to analyze images of tomato fruits. By leveraging deep learning techniques, we can accurately identify whether tomatoes are ripe, unripe, or reject quality.</p>
+            <p>The model has been trained on a diverse dataset of tomato images, covering various stages of ripeness and quality levels. This enables our system to deliver quick and accurate classifications, empowering farmers to make informed decisions promptly.</p>
+        </section>
+
+        <section class="section">
+            <h2>How It Works</h2>
+            <ol>
+                <li>Upload an image of your tomato plant or fruit.</li>
+                <li>Our AI model analyzes the image in real-time.</li>
+                <li>Receive an instant diagnosis of the tomato health.</li>
+            </ol>
+        </section>
+
+        <section class="section">
+            <h2>Our Team</h2>
+            <div class="team-member">
+                <h3>AI Specialist and Project Lead:</h3>
+                <p class="team-lead">Jeff Geoff</p>
+            </div>
+            <div class="team-member">
+                <h3>Agricultural Experts and Data Scientists:</h3>
+                <ul class="team-list">
+                    <li>Katuramu Edgar</li>
+                    <li>Aine Levi</li>
+                    <li>Tukwasiibwe Martin</li>
+                    <li>Niwamanya James</li>
+                    <li>Kanyesigye William</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Contact Us</h2>
+            <p>Have questions or suggestions? We'd love to hear from you!</p>
+            <p>Email: <a href="mailto:edgarkaturamu@gmail.com">edgarkaturamu@gmail.com</a></p>
+            <p>Phone: <a href="tel:+256785381550">(256) 785-381550</a></p>
+        </section>
+    </div>
+</body>
+</html>

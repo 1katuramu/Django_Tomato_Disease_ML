@@ -1,0 +1,38 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block sidebar %}
+{{ block.super }}
+<div class="module">
+  <h2>{% trans 'Tomato Health Tools' %}</h2>
+  <ul class="admin-tools-list">
+    <li>
+      <a href="{% url 'admin:tomato_statistics' %}" class="admin-tools-link">
+        {% trans 'Tomato Image Statistics' %}
+      </a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+  .admin-tools-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .admin-tools-list li {
+    margin-bottom: 10px;
+  }
+  .admin-tools-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+  .admin-tools-link:hover {
+    text-decoration: underline;
+  }
+</style>
+{% endblock %}

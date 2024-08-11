@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TomatoHealth Detector - Recognition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+        }
+        header li {
+            padding: 0 20px;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        header .highlight, header .current a {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        header a:hover {
+            color: #ffd700;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .main-content {
+            margin-top: 80px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #e74c3c;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px dashed #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .file-input-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .btn-predict {
+            background-color: #e74c3c;
+        }
+        .btn-predict:hover {
+            background-color: #c0392b;
+        }
+        .file-name {
+            margin-left: 10px;
+            font-style: italic;
+        }
+        #imagePreview {
+            margin-top: 20px;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .prediction {
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        .error {
+            background-color: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #3498db;
+        }
+        .loading:after {
+            content: '...';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        @media(max-width: 768px) {
+            header .container {
+                flex-direction: column;
+            }
+            header ul {
+                margin-top: 10px;
+            }
+            form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .file-input-wrapper, .btn-predict {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">TomatoHealth Detector</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li class="current"><a href="{% url 'recognition' %}">Recognition</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <div class="main-content">
+            <form method="post" enctype="multipart/form-data" id="uploadForm">
+                {% csrf_token %}
+                <div class="file-input-wrapper">
+                    <button type="button" class="btn">Choose Image</button>
+                    <input type="file" name="test_image" accept="image/*" required id="imageInput">
+                </div>
+                <span class="file-name"></span>
+                <button type="submit" name="predict" class="btn btn-predict">Predict</button>
+            </form>
+            
+            <div id="loading" class="loading">Analyzing image</div>
+            
+            {% if prediction %}
+                <div class="prediction">
+                    <h2>Prediction: {{ prediction }}</h2>
+                </div>
+            {% endif %}
+            
+            {% if error %}
+                <div class="error">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+            
+            <div id="imagePreview">
+                {% if test_image_url %}
+                    <h3>Uploaded Image:</h3>
+                    <img src="{{ test_image_url }}" alt="Uploaded Tomato Image" id="uploadedImage">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const fileName = document.querySelector('.file-name');
+        const imagePreview = document.getElementById('imagePreview');
+        const uploadForm = document.getElementById('uploadForm');
+        const loading = document.getElementById('loading');
+
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            fileName.textContent = file.name;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.innerHTML = `
+                    <h3>Uploaded Image:</h3>
+                    <img src="${e.target.result}" alt="Uploaded Tomato Image" id="uploadedImage">
+                `;
+            }
+            reader.readAsDataURL(file);
+        });
+
+        uploadForm.addEventListener('submit', function(event) {
+            loading.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
